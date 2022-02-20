@@ -7,8 +7,8 @@ import java.sql.Statement;
 
 import com.cts.employeedetailsreport.dao.DBConnectionManager;
 import com.cts.employeedetailsreport.exception.InvalidEmployeeNumberException;
+import com.cts.employeedetailsreport.service.HospitalManagement;
 import com.cts.employeedetailsreport.skeleton.SkeletonValidator;
-import com.cts.employeedetailsreport.util.ApplicationUtil;
 
 public class EmployeeDetailsMain {
 
@@ -20,22 +20,17 @@ public class EmployeeDetailsMain {
 		new SkeletonValidator();
 		 
 		// CODE SKELETON - VALIDATION ENDS
-
+		new HospitalManagement();
 // TYPE YOUR CODE HERE
-		DBConnectionManager db = new DBConnectionManager();
-		DBConnectionManager.getInstance();
+		DBConnectionManager db = new DBConnectionManager().getInstance();
 		Connection c = db.getConnection();
-		ApplicationUtil au = new ApplicationUtil();
-		au.readFile("inputfeed.txt");
+		HospitalManagement hm = new HospitalManagement();
+		hm.addEmployeeList("inputfeed.txt");
 		Statement s = c.createStatement();
 		String SQL = "Select * from empdetails";
 		ResultSet rs = s.executeQuery(SQL);
 		while(rs.next()) {
-			System.out.println(rs.getString(1));
-			System.out.println(rs.getString(2));
-			System.out.println(rs.getString(3));
-			System.out.println(rs.getString(4));
-			System.out.println(rs.getString(5));
+			System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5));
 		}
 		
 	}

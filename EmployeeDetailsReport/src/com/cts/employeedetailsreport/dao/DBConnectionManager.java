@@ -26,9 +26,9 @@ public class DBConnectionManager {
 			fis = new FileInputStream("database.properties");
 			props.load(fis);
 
-			Class.forName(props.getProperty("DB_DRIVER_CLASS"));
+			Class.forName(props.getProperty("DB_DRIVER_CLASS"));	
 
-			this.con = DriverManager.getConnection(props.getProperty("DB_URL"), props.getProperty("DB_USERNAME"), props.getProperty("DB_PASSWORD"));
+			con = DriverManager.getConnection(props.getProperty("DB_URL"), props.getProperty("DB_USERNAME"), props.getProperty("DB_PASSWORD"));
 			fis.close();
 			
 		}

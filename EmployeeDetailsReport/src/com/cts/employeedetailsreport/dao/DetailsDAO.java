@@ -2,8 +2,8 @@ package com.cts.employeedetailsreport.dao;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import com.cts.employeedetailsreport.exception.InvalidEmployeeNumberException;
@@ -16,29 +16,21 @@ public class DetailsDAO {
 	
 		boolean recordsAdded = false;
 		DBConnectionManager db = new DBConnectionManager();
-		// FILL THE CODE HERE
-		String SQL = "INSERT INTO empdetails(employeeNumber,employeeName,level,extraWorkingHours,totalSalary) " + "VALUES(?,?,?,?,?)";
 		DBConnectionManager.getInstance();
 		Connection conn = db.getConnection();
+		conn.setAutoCommit(false);
+//		String SQL = "";
 		try {
-			
-            PreparedStatement stmt = conn.prepareStatement(SQL); 
-//            int count = 0;
-
-			for(EmployeeDetails emp: eList){
-				stmt.setString(1,emp.getEmployeeNumber());
-				stmt.setString(2,emp.getEmployeeName());
-				stmt.setString(3, emp.getLevel());
-				stmt.setInt(4, emp.getExtraWorkingHours());
-				stmt.setDouble(5, emp.getTotalSalary());
-				stmt.executeUpdate(SQL);
-//				count = stmt.executeUpdate(SQL);
-//				if(count != 0){
-//					recordsAdded = true;
-//				} 
+			Statement stmt = conn.createStatement();
+			for(EmployeeDetails list: eList) {
+				 String SQL = "INSERT INTO EMPDETAILS VALUES('"+list.getEmployeeNumber()+"','"+list.getEmployeeName()+"','"+list.getLevel()+"','"+list.getExtraWorkingHours()+"','"+list.getTotalSalary()+"')";
+				 stmt.executeUpdate(SQL);
+				 
 			}
+			
 			conn.commit();
 			recordsAdded = true;
+          
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

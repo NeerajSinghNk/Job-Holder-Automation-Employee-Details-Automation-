@@ -1,24 +1,27 @@
 package com.cts.employeedetailsreport.service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cts.employeedetailsreport.dao.DetailsDAO;
 import com.cts.employeedetailsreport.exception.InvalidEmployeeNumberException;
 import com.cts.employeedetailsreport.model.EmployeeDetails;
 import com.cts.employeedetailsreport.util.ApplicationUtil;
 
 public class HospitalManagement {
 	
-private List<String> employeeRecords;
+private List<String> empRecords;
 public List<String> getEmployeeRecords(){
-	return employeeRecords;
+	return empRecords;
 }
 public void setEmployeeRecords(List<String> employeeRecords) {
-	this.employeeRecords = employeeRecords;
+	this.empRecords = employeeRecords;
 }
 	
-public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employeeRecords) {
+public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employeeRecords) throws FileNotFoundException, SQLException {
 		
 		
 		final String COMMADELIMITER = ",";
@@ -28,20 +31,25 @@ public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employ
 		int listSize = employeeRecords.size();
 		int i=0;
 		EmployeeDetails empDt;
+		DetailsDAO ddinsert = new DetailsDAO();
 		while(listSize-- > 0) {
 			String employeeDetailsString[] = employeeRecords.get(i++).split(COMMADELIMITER);
 			try {
 				if(ApplicationUtil.validate(employeeDetailsString[0])) {
 					int extraHours = Integer.parseInt(employeeDetailsString[3]);
 					double sal = calculateTotalSalary(employeeDetailsString[2], extraHours);
+					ddinsert.insertEmployeeList(empList);
 					empDt = new EmployeeDetails(employeeDetailsString[0],employeeDetailsString[1],employeeDetailsString[2],extraHours,sal);
 					empList.add(empDt);
+					
 				}
+
+				
 			} catch (InvalidEmployeeNumberException e) {
-				// TODO: handle exception
 				System.out.println(e);
 			}
 		}
+		System.out.println(empList.size());
  	 	
 		return empList;
 	}
@@ -55,7 +63,6 @@ public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employ
 			this.setEmployeeRecords(ApplicationUtil.readFile(inputFeed));
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
