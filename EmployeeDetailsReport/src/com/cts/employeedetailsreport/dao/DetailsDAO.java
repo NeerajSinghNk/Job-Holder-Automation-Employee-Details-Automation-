@@ -17,7 +17,7 @@ public class DetailsDAO {
 		// FILL THE CODE HERE
 		try(Connection con = DBConnectionManager.getInstance().getConnection()) {
 			for(EmployeeDetails stdAdmObj:eList) {
-				String sql = "INSERT INTO empdetails	VALUES(?,?,?,?,?);";
+				String sql = "INSERT INTO EMPLOYEEDETAILS	VALUES(?,?,?,?,?);";
 				PreparedStatement prepState = con.prepareStatement(sql);
 				prepState.setString(1, stdAdmObj.getEmployeeNumber());
 				prepState.setString(2, stdAdmObj.getEmployeeName());
