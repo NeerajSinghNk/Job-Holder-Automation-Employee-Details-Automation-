@@ -32,7 +32,7 @@ public class ApplicationUtil {
 			    }
 			}
 			catch (IOException e) {
-			    System.out.println("File Read Error");
+			    System.out.println(e);
 			}
 
 	    	return employeeList;
