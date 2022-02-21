@@ -39,30 +39,30 @@ public class ApplicationUtil {
 		{
 	    	boolean val=false;
 			// FILL THE CODE HERE
-//			if(employeeNumber.substring(0, 2).equals("PR") && employeeNumber.length() == 7){
-//				val = true;
-//			}
-//			else {
-//				throw new InvalidEmployeeNumberException("Invalid Employee Number");
-//			}
+			if(employeeNumber.substring(0, 2).equals("PR") && employeeNumber.length() == 7){
+				val = true;
+			}
+			else {
+				throw new InvalidEmployeeNumberException("Invalid Employee Number");
+			}
 	    	
-	    	int len = employeeNumber.length();
-	    	char ch[] = employeeNumber.toCharArray();
-	    	if(len == 7) {
-	    		if(ch[0] == 'P' && ch[1] == 'R') {
-	    			for(int i=2;i<len;i++) {
-	    	    		if(Character.isDigit(ch[i])) {
-	    	    			val = true;
-	    	    		}
-	    	    	}
-		    	} 
-	    	}
-	    	else {
-	    		throw new InvalidEmployeeNumberException("Invalid Employee Number");
-	    	}
-	    	
+//	    	int len = employeeNumber.length();
+//	    	char ch[] = employeeNumber.toCharArray();
+//	    	if(len == 7) {
+//	    		if(ch[0] == 'P' && ch[1] == 'R') {
+//	    			for(int i=2;i<len;i++) {
+//	    	    		if(Character.isDigit(ch[i])) {
+//	    	    			val = true;
+//	    	    		}
+//	    	    	}
+//		    	} 
+//	    	}
+//	    	else {
+//	    		throw new InvalidEmployeeNumberException("Invalid Employee Number");
+//	    	}
+//	    	
 	    	return val;
-	    	
+//	    	
 	    		
 
 		}

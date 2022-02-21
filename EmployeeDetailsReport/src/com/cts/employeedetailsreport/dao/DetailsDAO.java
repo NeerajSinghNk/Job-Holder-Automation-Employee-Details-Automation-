@@ -1,59 +1,50 @@
 package com.cts.employeedetailsreport.dao;
 
-import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
 import com.cts.employeedetailsreport.exception.InvalidEmployeeNumberException;
 import com.cts.employeedetailsreport.model.EmployeeDetails;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
+
 public class DetailsDAO {
- 	 
+ 	
 	
-	public boolean insertEmployeeList(List <EmployeeDetails> eList) throws InvalidEmployeeNumberException, FileNotFoundException, SQLException {
+	public static boolean insertEmployeeList(List <EmployeeDetails> eList) throws InvalidEmployeeNumberException {
 	
 		boolean recordsAdded = false;
-		DBConnectionManager db = new DBConnectionManager();
-		DBConnectionManager.getInstance();
-		Connection conn = db.getConnection();
-		conn.setAutoCommit(false);
-//		String SQL = "";
+		
+
+
 		try {
-			Statement stmt = conn.createStatement();
-			for(EmployeeDetails list: eList) {
-				 String SQL = "INSERT INTO EMPDETAILS VALUES('"+list.getEmployeeNumber()+"','"+list.getEmployeeName()+"','"+list.getLevel()+"','"+list.getExtraWorkingHours()+"','"+list.getTotalSalary()+"')";
-				 stmt.executeUpdate(SQL);
-				 
+			Connection conn = DBConnectionManager.getConnection();
+            PreparedStatement stmt;
+            int count = 0;
+
+			for(EmployeeDetails emp: eList){
+
+				stmt = conn.prepareStatement("INSERT INTO empdetails(employeeNumber,employeeName,level,extraWorkingHours,totalSalary) VALUES (?,?,?,?,?)");
+				stmt.setString(1,emp.getEmployeeNumber());
+				stmt.setString(2,emp.getEmployeeName());
+				stmt.setString(3, emp.getLevel());
+				stmt.setInt(4, emp.getExtraWorkingHours());
+				stmt.setDouble(5, emp.getTotalSalary());
+				count = stmt.executeUpdate();
+				if(count != 0){
+					recordsAdded = true;
+
+				}
 			}
-			
-			conn.commit();
-			recordsAdded = true;
-          
 		} 
 		catch (Exception e) {
+			//TODO: handle exception
 			e.printStackTrace();
-		}
-		
-		try {
-			conn.rollback();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			try {
-				conn.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
 		}
 
-		
+
 		return recordsAdded;
 	}
-	    		
-	    
-	    	
+
+
+
 }

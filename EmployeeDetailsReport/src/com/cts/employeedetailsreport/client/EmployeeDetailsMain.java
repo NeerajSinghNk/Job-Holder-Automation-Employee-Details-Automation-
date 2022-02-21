@@ -20,9 +20,9 @@ public class EmployeeDetailsMain {
 		new SkeletonValidator();
 		 
 		// CODE SKELETON - VALIDATION ENDS
-		new HospitalManagement();
+//		new HospitalManagement();
 // TYPE YOUR CODE HERE
-		DBConnectionManager db = new DBConnectionManager().getInstance();
+		DBConnectionManager db = new DBConnectionManager();
 		Connection c = db.getConnection();
 		HospitalManagement hm = new HospitalManagement();
 		hm.addEmployeeList("inputfeed.txt");

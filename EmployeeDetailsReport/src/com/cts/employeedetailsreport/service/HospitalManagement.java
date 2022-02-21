@@ -31,14 +31,14 @@ public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employ
 		int listSize = employeeRecords.size();
 		int i=0;
 		EmployeeDetails empDt;
-		DetailsDAO ddinsert = new DetailsDAO();
+	
 		while(listSize-- > 0) {
 			String employeeDetailsString[] = employeeRecords.get(i++).split(COMMADELIMITER);
 			try {
 				if(ApplicationUtil.validate(employeeDetailsString[0])) {
 					int extraHours = Integer.parseInt(employeeDetailsString[3]);
 					double sal = calculateTotalSalary(employeeDetailsString[2], extraHours);
-					ddinsert.insertEmployeeList(empList);
+					DetailsDAO.insertEmployeeList(empList);
 					empDt = new EmployeeDetails(employeeDetailsString[0],employeeDetailsString[1],employeeDetailsString[2],extraHours,sal);
 					empList.add(empDt);
 					
@@ -49,7 +49,7 @@ public static ArrayList <EmployeeDetails> buildEmployeeList(List <String> employ
 				System.out.println(e);
 			}
 		}
-		System.out.println(empList.size());
+//		System.out.println(empList.size());
  	 	
 		return empList;
 	}
